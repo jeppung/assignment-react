@@ -1,19 +1,8 @@
 import { useState } from "react"
 import Navbar from "../components/Navbar"
 import axios from "axios"
-
-interface IRegisterForm {
-    email: string,
-    password: string,
-    first_name: string,
-    last_name: string
-}
-
-interface IAPIResponse {
-    code: number,
-    data: any,
-    message: string
-}
+import { IAPIResponse } from "../interfaces/apiResponse"
+import { IRegisterForm } from "../interfaces/registerForm"
 
 const Register = () => {
 
