@@ -1,4 +1,5 @@
 import { IModal } from "../interfaces/modal"
+import { formatCurrency } from "../utils"
 
 const Modal = ({ data, onClose }: IModal) => {
 
@@ -15,7 +16,7 @@ const Modal = ({ data, onClose }: IModal) => {
                         <div className="w-full flex flex-col gap-y-3">
                             <div className="flex justify-between items-baseline">
                                 <p>Amount</p>
-                                <h1 className="font-bold text-3xl">{data.amount}</h1>
+                                <h1 className="font-bold text-3xl">{formatCurrency(data.amount, 0)}</h1>
                             </div>
                             <div className="flex justify-between items-center">
                                 <p>Transaction Id</p>

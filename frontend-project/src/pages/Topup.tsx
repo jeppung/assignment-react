@@ -10,7 +10,7 @@ import { ITopupForm, ITopupState } from "../interfaces/topupForm"
 
 const Topup = () => {
     const [selectedFrom, setSelectedFrom] = useState(1)
-    const [amount, setAmount] = useState<number | string>(0)
+    const [amount, setAmount] = useState<number | string>("")
     const [topup, setTopup] = useState<ITopupState>({
         status: false,
         data: {}

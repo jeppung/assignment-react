@@ -4,6 +4,7 @@ import axios from "axios"
 import { useAuthStore } from "../store/userAuth"
 import { IAPIResponse, IUserDataResponse } from "../interfaces/apiResponse"
 import { useUserDataStore } from "../store/userData"
+import { formatCurrency } from "../utils"
 
 
 const Home = () => {
@@ -42,8 +43,8 @@ const Home = () => {
                         <p className="text-xl">Account: {userData.id}</p>
                         <p className="text-xl">Balance:</p>
                     </div>
-                    <div className="self-end">
-                        <h1 className="text-5xl">{userData.wallet?.balance}</h1>
+                    <div className="self-end mt-2">
+                        <h1 className="text-5xl font-[500]">IDR {formatCurrency(userData.wallet?.balance as number, 2)}</h1>
                     </div>
                 </section>
             </main>
