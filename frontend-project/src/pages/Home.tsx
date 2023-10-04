@@ -3,12 +3,13 @@ import Navbar from "../components/Navbar"
 import axios from "axios"
 import { useAuthStore } from "../store/userAuth"
 import { IAPIResponse, IUserDataResponse } from "../interfaces/apiResponse"
+import { useUserDataStore } from "../store/userData"
 
 
 const Home = () => {
 
     const { token } = useAuthStore();
-    const [userData, setUserData] = useState<Partial<IUserDataResponse>>({})
+    const { userData, setUserData } = useUserDataStore();
 
     useEffect(() => {
         getUserData()
