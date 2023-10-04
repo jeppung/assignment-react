@@ -39,7 +39,7 @@ const Home = () => {
                     <div>
                         <h1 className="text-4xl font-bold">Good Morning, {userData.first_name}</h1>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between mt-2">
                         <p className="text-xl">Account: {userData.id}</p>
                         <p className="text-xl">Balance:</p>
                     </div>
