@@ -33,13 +33,20 @@ const NavUnauth = () => {
 }
 
 const NavAuth = () => {
+
+    const { setToken } = useAuthStore()
+
+    const logoutHandler = () => {
+        setToken("")
+    }
+
     return (
         <>
             <li><Link to={"/"} className="text-[#737373]">Home</Link></li>
             <li><Link to={"/login"} className="text-[#737373]">Transfer</Link></li>
             <li><Link to={"/topup"} className="text-[#737373]">Topup</Link></li>
             <li><Link to={"/games"} className="text-[#737373]">Games</Link></li>
-            <li><Link to={"/logout"} className="text-[#737373]">Logout</Link></li>
+            <li><Link to={"/login"} className="text-[#737373]" onClick={logoutHandler}>Logout</Link></li>
         </>
     )
 }
