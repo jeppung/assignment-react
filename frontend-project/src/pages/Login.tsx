@@ -18,9 +18,10 @@ const Login = () => {
                         </div>
                         <button className="text-sm bg-[#23A6F0] py-4 rounded-md text-white font-bold">Submit</button>
                     </form>
+                    <p className="text-[#252B42]">Forget password? <span className="font-[500]">Click here</span></p>
                 </div>
             </main>
-            <div className="bg-blue-400 h-screen absolute right-0 flex items-center px-10">
+            <div className="bg-[#23A6F0] h-screen absolute right-0 flex items-center px-10">
                 <img src="./assets/login.svg" alt="" />
             </div>
         </div>
