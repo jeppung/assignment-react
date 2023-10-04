@@ -1,22 +1,58 @@
+import { useState } from "react"
 import Navbar from "../components/Navbar"
+import axios from "axios"
+import { IAPIResponse } from "../interfaces/apiResponse"
+
+interface ILoginForm {
+    email: string,
+    password: string
+}
 
 const Login = () => {
+
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [error, setError] = useState("")
+
+
+    const loginHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+        setError("")
+        e.preventDefault()
+
+        let data: ILoginForm = {
+            email: email,
+            password: password
+        }
+
+        try {
+            const response = await axios.post("http://localhost:8080/login", data)
+            console.log(response.data)
+        } catch (e) {
+            if (axios.isAxiosError(e)) {
+                setError((e.response?.data as IAPIResponse).message)
+            }
+        }
+    }
+
     return (
         <div className="font-montserrat  flex flex-col h-screen relative">
             <Navbar />
             <main className="flex-1 flex items-center max-w-5xl mx-auto w-full">
                 <div className="flex flex-col gap-y-10 w-[450px]">
                     <h1 className="text-4xl font-bold">Login</h1>
-                    <form action="#" className="flex flex-col gap-y-5">
+                    <form action="#" className="flex flex-col gap-y-5" onSubmit={(e) => loginHandler(e)}>
                         <div className="flex flex-col  gap-y-3">
                             <label htmlFor="email" className="font-bold">Email</label>
-                            <input type="email" name="email" id="email" placeholder="asep.bc@gmail.com" className="border-[1px] border-[#4F4F4F] rounded-md px-5 py-3 text-sm" required />
+                            <input onChange={(e) => setEmail(e.target.value)} type="email" name="email" id="email" placeholder="asep.bc@gmail.com" className="border-[1px] border-[#4F4F4F] rounded-md px-5 py-3 text-sm" required />
                         </div>
                         <div className="flex flex-col  gap-y-3">
                             <label htmlFor="password" className="font-bold">Password</label>
-                            <input type="password" name="password" id="password" placeholder="***************" className="border-[1px] border-[#4F4F4F] rounded-md px-5 py-3 text-sm" required />
+                            <input onChange={(e) => setPassword(e.target.value)} type="password" name="password" id="password" placeholder="***************" className="border-[1px] border-[#4F4F4F] rounded-md px-5 py-3 text-sm" required />
                         </div>
                         <button className="text-sm bg-[#23A6F0] py-4 rounded-md text-white font-bold">Submit</button>
+                        {
+                            error !== "" && <p className="text-red-500">{error}</p>
+                        }
                     </form>
                     <p className="text-[#252B42]">Forget password? <span className="font-[500]">Click here</span></p>
                 </div>
