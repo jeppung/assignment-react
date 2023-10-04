@@ -11,7 +11,7 @@ const Navbar = () => {
                 <h1 className="font-bold text-2xl">DigiWallet</h1>
             </div>
             <div>
-                <ul className="flex gap-x-[40px] text-sm font-bold mr-10">
+                <ul className={`flex gap-x-[40px] text-sm font-bold ${token === "" && "mr-10"}`}>
                     {
                         token !== "" ? <NavAuth /> : <NavUnauth />
                     }

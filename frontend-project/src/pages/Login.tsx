@@ -1,7 +1,7 @@
 import { useState } from "react"
 import Navbar from "../components/Navbar"
 import axios from "axios"
-import { IAPIResponse, LoginResponse } from "../interfaces/apiResponse"
+import { IAPIResponse, ILoginResponse } from "../interfaces/apiResponse"
 import { useAuthStore } from "../store/userAuth"
 import { useNavigate } from "react-router-dom"
 
@@ -30,7 +30,7 @@ const Login = () => {
 
         try {
             const response = await axios.post("http://localhost:8080/login", data)
-            const token = ((response.data as IAPIResponse).data as LoginResponse).token
+            const token = ((response.data as IAPIResponse).data as ILoginResponse).token
             setToken(token)
             navigate("/")
         } catch (e) {
