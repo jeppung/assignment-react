@@ -7,6 +7,7 @@ import PageNotFound from './pages/PageNotFound'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Protected from './pages/Protected'
+import ProtectedAuth from './pages/ProtectedAuth'
 
 
 function App() {
@@ -14,8 +15,10 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path='/login' element={<Login />} />
-        <Route path='/register' element={<Register />} />
+        <Route element={<ProtectedAuth />}>
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
+        </Route>
         <Route path='*' element={<PageNotFound />} />
         <Route element={<Protected />}>
           <Route index path='/' element={<Home />} />
