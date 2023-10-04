@@ -1,5 +1,9 @@
 export interface IAPIResponse {
     code: number,
-    data: any,
+    data: LoginResponse | any,
     message: string
+}
+
+export interface LoginResponse {
+    token: string
 }
