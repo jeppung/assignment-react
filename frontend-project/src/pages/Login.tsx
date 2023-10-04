@@ -1,7 +1,9 @@
 import { useState } from "react"
 import Navbar from "../components/Navbar"
 import axios from "axios"
-import { IAPIResponse } from "../interfaces/apiResponse"
+import { IAPIResponse, LoginResponse } from "../interfaces/apiResponse"
+import { useAuthStore } from "../store/userAuth"
+import { useNavigate } from "react-router-dom"
 
 interface ILoginForm {
     email: string,
@@ -13,6 +15,8 @@ const Login = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
+    const { setToken } = useAuthStore()
+    const navigate = useNavigate()
 
 
     const loginHandler = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -26,7 +30,9 @@ const Login = () => {
 
         try {
             const response = await axios.post("http://localhost:8080/login", data)
-            console.log(response.data)
+            const token = ((response.data as IAPIResponse).data as LoginResponse).token
+            setToken(token)
+            navigate("/")
         } catch (e) {
             if (axios.isAxiosError(e)) {
                 setError((e.response?.data as IAPIResponse).message)
