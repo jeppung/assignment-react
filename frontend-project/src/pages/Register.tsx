@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar"
 import axios from "axios"
 import { IAPIResponse } from "../interfaces/apiResponse"
 import { IRegisterForm } from "../interfaces/registerForm"
+import { useNavigate } from "react-router-dom"
 
 const Register = () => {
 
@@ -10,6 +11,7 @@ const Register = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
+    const navigate = useNavigate()
 
     const splitName = () => {
         let nameSplit = name.split(" ")
@@ -34,8 +36,8 @@ const Register = () => {
         }
 
         try {
-            const response = await axios.post("http://localhost:8080/register", data)
-            console.log(response)
+            await axios.post("http://localhost:8080/register", data)
+            navigate("/login")
         } catch (e) {
             if (axios.isAxiosError(e)) {
                 setError((e.response?.data as IAPIResponse).message)
