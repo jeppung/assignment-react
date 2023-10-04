@@ -2,5 +2,6 @@ import { ITopupResponse } from "./apiResponse"
 
 export interface IModal {
     onClose: () => void
-    data: ITopupResponse
+    data: ITopupResponse,
+    title: string
 }

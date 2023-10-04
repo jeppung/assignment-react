@@ -1,18 +1,18 @@
 import { IModal } from "../interfaces/modal"
 import { formatCurrency } from "../utils"
 
-const Modal = ({ data, onClose }: IModal) => {
+const Modal = ({ data, onClose, title }: IModal) => {
 
     return (
         <div className="absolute bg-black/20 h-full w-full flex justify-center items-center">
             <div>
-                <h1 className="text-4xl font-bold text-black/20 text-center">Top Up</h1>
+                <h1 className="text-4xl font-bold text-black/20 text-center">{title}</h1>
                 <div className="bg-white w-[488px] rounded-xl flex justify-center mt-5 p-[40px]">
                     <div className="flex flex-col justify-center items-center w-full">
                         <div>
                             <img src="./assets/icon_success.svg" className="w-16 h-16" alt="" />
                         </div>
-                        <h1 className="text-3xl text-[#2DC071] font-bold p-[40px]">Top Up Success</h1>
+                        <h1 className="text-3xl text-[#2DC071] font-bold p-[40px]">{title} Success</h1>
                         <div className="w-full flex flex-col gap-y-3">
                             <div className="flex justify-between items-baseline">
                                 <p>Amount</p>
@@ -24,11 +24,11 @@ const Modal = ({ data, onClose }: IModal) => {
                             </div>
                             <div className="flex justify-between items-center">
                                 <p>From</p>
-                                <h1>1001</h1>
+                                <h1>{data.wallet_id}</h1>
                             </div>
                             <div className="flex justify-between items-center">
                                 <p>To</p>
-                                <h1>{data.wallet_id}</h1>
+                                <h1>{data.to_wallet_id}</h1>
                             </div>
                             <div className="flex justify-between items-center">
                                 <p>Description</p>

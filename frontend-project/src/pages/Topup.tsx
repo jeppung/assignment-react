@@ -43,7 +43,7 @@ const Topup = () => {
 
     return (
         <div className="font-montserrat flex flex-col h-screen ">
-            {topup.status && <Modal onClose={() => {
+            {topup.status && <Modal title="Top Up" onClose={() => {
                 setTopup({ ...topup, status: false, data: {} })
                 setAmount("")
                 setSelectedFrom(1)
