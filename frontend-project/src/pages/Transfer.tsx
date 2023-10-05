@@ -50,7 +50,7 @@ const Transfer = () => {
             setUserData({ ...userData, wallet: { ...userData.wallet!, balance: userData.wallet!.balance - ((response.data as IAPIResponse).data as ITopupResponse).amount } })
         } catch (e) {
             if (axios.isAxiosError(e)) {
-                toast.error("Transfer minimum 50.000, maximum 10.000.000")
+                toast.error("Transfer minimum 1.000, maximum 50.000.000")
             }
         }
     }
