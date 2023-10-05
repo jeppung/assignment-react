@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { ITopupResponse, ITransactionsResponse } from "../interfaces/apiResponse";
+import { ITransactionsResponse } from "../interfaces/apiResponse";
 import { persist } from "zustand/middleware";
 
 interface ITransactionsStore {
