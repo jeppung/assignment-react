@@ -30,6 +30,17 @@ chmod +x mac-server
 
 3. run "pnpm install" for installing project dependencies
 
-4. run "pnpm run dev" for starting the project
+4. run "pnpm run dev" for starting the project -> then open http://localhost:5173/ in the browser
 
 5. run "pnpm run test" for running Transfer page test
+
+# Screenshot of the App
+
+![Intial loadup page](./screenshots/image.png)
+![Register page](./screenshots/image-1.png)
+![Home page](./screenshots/image-2.png)
+![Transfer page](./screenshots/image-3.png)
+![Topup page](./screenshots/image-4.png)
+![Games page](./screenshots/image-5.png)
+![Example game](./screenshots/image-6.png)
+![Transaction list](./screenshots/image-7.png)
