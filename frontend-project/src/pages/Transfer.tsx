@@ -83,7 +83,7 @@ const Transfer = () => {
                         </div>
                         <div className="flex flex-col gap-y-3">
                             <label htmlFor="description" className="font-bold">Description</label>
-                            <input onChange={(e) => setDescription(e.target.value)} value={description} type="text" name="description" id="description" className="border-[1px] border-[#4F4F4F] rounded-md px-5 py-3 text-sm" required />
+                            <input onChange={(e) => setDescription(e.target.value)} value={description} type="text" name="description" id="description" className="border-[1px] border-[#4F4F4F] rounded-md px-5 py-3 text-sm" required maxLength={35} />
                         </div>
                         <button className="text-sm bg-[#23A6F0] py-4 rounded-md text-white font-bold">Submit</button>
                     </form>
