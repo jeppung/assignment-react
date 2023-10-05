@@ -7,6 +7,7 @@ import { ITopupForm } from "../interfaces/topupForm"
 import axios from "axios"
 import { useAuthStore } from "../store/userAuth"
 import { IAPIResponse, ITopupResponse } from "../interfaces/apiResponse"
+import toast, { Toaster } from "react-hot-toast"
 
 const Games = () => {
     const { userData, setUserData } = useUserDataStore()
@@ -41,6 +42,14 @@ const Games = () => {
             const key = Math.floor(Math.random() * 1000001)
             gameCards.push(
                 <GameCard id={key} key={key} prize={prize} onClickCard={(prize) => {
+                    toast((_) => (
+                        <div>
+                            <h1>Congratulation!</h1>
+                            <p>You Win, <span className="font-bold text-xl">{formatCurrency(prize, 0)}</span></p>
+                        </div>
+                    ), {
+                        icon: '🎉'
+                    })
                     setTimeout(() => {
                         topupHandler(prize)
                         setChance(chance - 1)
@@ -54,6 +63,7 @@ const Games = () => {
 
     return (
         <div className="font-montserrat flex flex-col h-screen ">
+            <Toaster />
             <Navbar />
             <main className="max-w-5xl mx-auto py-[40px] w-full">
                 <section className="flex flex-col gap-y-4">

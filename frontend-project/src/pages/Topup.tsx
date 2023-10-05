@@ -7,6 +7,7 @@ import Modal from "../components/Modal"
 import { IAPIResponse, ITopupResponse } from "../interfaces/apiResponse"
 import { ITopupForm, ITopupState } from "../interfaces/topupForm"
 
+import toast, { Toaster } from 'react-hot-toast';
 
 const Topup = () => {
     const [selectedFrom, setSelectedFrom] = useState(1)
@@ -38,13 +39,14 @@ const Topup = () => {
 
         } catch (e) {
             if (axios.isAxiosError(e)) {
-                console.log(e)
+                toast.error("Top Up minimum 50.000, maximum 10.000.000")
             }
         }
     }
 
     return (
         <div className="font-montserrat flex flex-col h-screen ">
+            <Toaster />
             {topup.status && <Modal title="Top Up" onClose={() => {
                 setTopup({ ...topup, status: false, data: {} })
                 setAmount("")

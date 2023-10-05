@@ -5,6 +5,7 @@ import { IAPIResponse, ITopupResponse } from "../interfaces/apiResponse";
 import Modal from "../components/Modal";
 import axios from "axios";
 import { useAuthStore } from "../store/userAuth";
+import toast, { Toaster } from "react-hot-toast";
 
 interface ITransferState {
     status: boolean
@@ -45,18 +46,18 @@ const Transfer = () => {
                     Authorization: `Bearer ${token}`
                 }
             })
-            console.log(response.data)
             setTransfer({ ...transfer, status: true, data: ((response.data as IAPIResponse).data) })
             setUserData({ ...userData, wallet: { ...userData.wallet!, balance: userData.wallet!.balance - ((response.data as IAPIResponse).data as ITopupResponse).amount } })
         } catch (e) {
             if (axios.isAxiosError(e)) {
-                console.log(e)
+                toast.error("Transfer minimum 50.000, maximum 10.000.000")
             }
         }
     }
 
     return (
         <div className="font-montserrat flex flex-col h-screen ">
+            <Toaster />
             {transfer.status && <Modal title="Transfer" onClose={() => {
                 setTransfer({ ...transfer, status: false, data: {} })
                 setAmount("")
