@@ -6,17 +6,9 @@ import Modal from "../components/Modal";
 import axios from "axios";
 import { useAuthStore } from "../store/userAuth";
 import toast, { Toaster } from "react-hot-toast";
+import { ITransferForm, ITransferState } from "../interfaces/transferForm";
 
-interface ITransferState {
-    status: boolean
-    data: Partial<ITopupResponse>
-}
 
-interface ITransferForm {
-    amount: number
-    to: number
-    description: string
-}
 
 const Transfer = () => {
     const { userData, setUserData } = useUserDataStore();
