@@ -1,0 +1,11 @@
+{
+	"testEnvironment": "jsdom",
+	"moduleNameMapper": {
+		"^.+\\.svg$": "jest-svg-transformer",
+		"^.+\\.(css|less|scss)$": "identity-obj-proxy"
+	},
+	"setupFilesAfterEnv": ["<rootDir>/src/setupTests.ts"],
+	"transform": {
+		"^.+\\.tsx?$": ["ts-jest", { "tsconfig": "./tsconfig.json" }]
+	}
+}

@@ -68,7 +68,7 @@ const Transfer = () => {
             <main className="flex justify-center items-center flex-1">
                 <div>
                     <h1 className="text-4xl font-bold text-center">Transfer</h1>
-                    <form action="#" className=" w-[450px] flex flex-col gap-y-5 mt-10" onSubmit={(e) => transferHandler(e)}>
+                    <form action="#" className=" w-[450px] flex flex-col gap-y-5 mt-10" onSubmit={(e) => transferHandler(e)} data-testid="transfer-form">
                         <div className="flex flex-col gap-y-3">
                             <label htmlFor="from" className="font-bold">From</label>
                             <input value={userData.wallet_id} type="number" name="from" id="from" className="border-[1px] border-[#4F4F4F] rounded-md px-5 py-3 text-sm" required disabled />
