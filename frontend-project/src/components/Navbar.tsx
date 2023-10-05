@@ -1,6 +1,7 @@
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import { useAuthStore } from "../store/userAuth"
 import { useUserDataStore } from "../store/userData"
+import { useEffect } from "react"
 
 const Navbar = () => {
 
@@ -26,8 +27,8 @@ const NavUnauth = () => {
     return (
         <>
             <li><Link to={"/"} className="text-[#737373]">Home</Link></li>
-            <li><Link to={"/login"} className="text-white">Login</Link></li>
-            <li><Link to={"/register"} className="underline text-white">Register</Link></li>
+            <li><Link to={"/login"} className={`text-white ${location.pathname === "/login" && "underline"}`}>Login</Link></li>
+            <li><Link to={"/register"} className={`text-white ${location.pathname === "/register" && "underline"}`}>Register</Link></li>
             <li></li>
         </>
     )
@@ -37,6 +38,7 @@ const NavAuth = () => {
 
     const { setToken } = useAuthStore()
     const { setUserData } = useUserDataStore()
+    const location = useLocation()
 
     const logoutHandler = () => {
         setToken("")
@@ -45,11 +47,11 @@ const NavAuth = () => {
 
     return (
         <>
-            <li><Link to={"/"} className="text-[#737373]">Home</Link></li>
-            <li><Link to={"/transfer"} className="text-[#737373]">Transfer</Link></li>
-            <li><Link to={"/topup"} className="text-[#737373]">Topup</Link></li>
-            <li><Link to={"/games"} className="text-[#737373]">Games</Link></li>
-            <li><Link to={"/login"} className="text-[#737373]" onClick={logoutHandler}>Logout</Link></li>
+            <li><Link to={"/"} className={`text-[#737373] ${location.pathname === "/" && "underline"}`}>Home</Link></li>
+            <li><Link to={"/transfer"} className={`text-[#737373] ${location.pathname === "/transfer" && "underline"}`}>Transfer</Link></li>
+            <li><Link to={"/topup"} className={`text-[#737373] ${location.pathname === "/topup" && "underline"}`}>Topup</Link></li>
+            <li><Link to={"/games"} className={`text-[#737373] ${location.pathname === "/games" && "underline"}`}>Games</Link></li>
+            <li><Link to={"/login"} className={`text-[#737373] ${location.pathname === "/login" && "underline"}`} onClick={logoutHandler}>Logout</Link></li>
         </>
     )
 }
