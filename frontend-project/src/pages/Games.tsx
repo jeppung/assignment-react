@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import GameCard from "../components/GameCard"
 import Navbar from "../components/Navbar"
 import { useUserDataStore } from "../store/userData"
-import { formatCurrency } from "../utils"
+import { displayCurrentTime, formatCurrency } from "../utils"
 import { ITopupForm } from "../interfaces/topupForm"
 import axios from "axios"
 import { useAuthStore } from "../store/userAuth"
@@ -11,9 +11,6 @@ import { IAPIResponse, ITopupResponse } from "../interfaces/apiResponse"
 const Games = () => {
     const { userData, setUserData } = useUserDataStore()
     const { token } = useAuthStore()
-    const [interaction, setInteraction] = useState({
-        status: true
-    })
     const [chance, setChance] = useState(3)
 
 
@@ -61,7 +58,7 @@ const Games = () => {
             <main className="max-w-5xl mx-auto py-[40px] w-full">
                 <section className="flex flex-col gap-y-4">
                     <div className="flex justify-between items-center">
-                        <h1 className="text-2xl">Good morning, {userData.first_name}</h1>
+                        <h1 className="text-2xl">{displayCurrentTime()}, {userData.first_name}</h1>
                         <p className="text-lg">Balance:</p>
                     </div>
                     <div className="flex justify-between">
@@ -75,7 +72,7 @@ const Games = () => {
                         <p className="text-[18px]">Choose random box to get reward!</p>
                         <p className="text-[18px]">Chance: {chance}</p>
                     </div>
-                    <div className={`grid grid-cols-3 grid-rows-3 mt-[48px] gap-[50px] ${!interaction.status && "pointer-events-none"}`}>
+                    <div className={`grid grid-cols-3 grid-rows-3 mt-[48px] gap-[50px]`}>
                         {
                             displayGameCard()
                         }

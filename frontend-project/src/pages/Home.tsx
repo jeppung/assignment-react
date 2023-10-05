@@ -4,7 +4,7 @@ import axios from "axios"
 import { useAuthStore } from "../store/userAuth"
 import { IAPIResponse, ITransactionsResponse } from "../interfaces/apiResponse"
 import { useUserDataStore } from "../store/userData"
-import { formatCurrency } from "../utils"
+import { displayCurrentTime, formatCurrency } from "../utils"
 import moment from 'moment';
 import { useTransactionsStore } from "../store/transactionsStore"
 
@@ -85,16 +85,13 @@ const Home = () => {
         return pages
     }
 
-
-
-
     return (
         <div className="font-montserrat">
             <Navbar />
             <main className="max-w-5xl mx-auto pb-20">
                 <section className="flex flex-col mt-[48px]">
                     <div>
-                        <h1 className="text-4xl font-bold">Good Morning, {userData.first_name}</h1>
+                        <h1 className="text-4xl font-bold">{displayCurrentTime()}, {userData.first_name}</h1>
                     </div>
                     <div className="flex justify-between mt-2">
                         <p className="text-xl">Account: {userData.wallet_id}</p>
