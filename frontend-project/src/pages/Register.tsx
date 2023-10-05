@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Navbar from "../components/Navbar"
 import axios from "axios"
 import { IAPIResponse } from "../interfaces/apiResponse"
@@ -12,6 +12,10 @@ const Register = () => {
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
     const navigate = useNavigate()
+
+    useEffect(() => {
+        document.title = "DigiWallet | Register"
+    }, [])
 
     const splitName = () => {
         let nameSplit = name.split(" ")

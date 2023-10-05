@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Navbar from "../components/Navbar"
 import { useUserDataStore } from "../store/userData"
 import axios from "axios"
@@ -20,6 +20,10 @@ const Topup = () => {
 
     const { userData, setUserData } = useUserDataStore()
     const { token } = useAuthStore()
+
+    useEffect(() => {
+        document.title = "DigiWallet | Topup"
+    }, [])
 
     const topupHandler = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()

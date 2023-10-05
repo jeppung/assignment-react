@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar"
 import { useUserDataStore } from "../store/userData"
 import { IAPIResponse, ITopupResponse } from "../interfaces/apiResponse";
@@ -22,6 +22,10 @@ const Transfer = () => {
         status: false,
         data: {}
     })
+
+    useEffect(() => {
+        document.title = "DigiWallet | Transfer"
+    }, [])
 
 
     const transferHandler = async (e: React.FormEvent<HTMLFormElement>) => {

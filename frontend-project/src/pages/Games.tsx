@@ -17,6 +17,10 @@ const Games = () => {
     const [disabledInteraction, setDisabledInteraction] = useState(false)
 
     useEffect(() => {
+        document.title = "DigiWallet | Games"
+    }, [])
+
+    useEffect(() => {
         preparingPrizes()
     }, [chance])
 

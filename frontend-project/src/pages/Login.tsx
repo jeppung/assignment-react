@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Navbar from "../components/Navbar"
 import axios from "axios"
 import { IAPIResponse, ILoginResponse, IUserDataResponse } from "../interfaces/apiResponse"
@@ -19,6 +19,10 @@ const Login = () => {
     const { setToken } = useAuthStore()
     const { setUserData } = useUserDataStore()
     const navigate = useNavigate()
+
+    useEffect(() => {
+        document.title = "DigiWallet | Login"
+    }, [])
 
     const getUserData = async (token: string) => {
         try {

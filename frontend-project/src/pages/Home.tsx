@@ -23,6 +23,10 @@ const Home = () => {
 
 
     useEffect(() => {
+        document.title = "DigiWallet | Home"
+    }, [])
+
+    useEffect(() => {
         getTransactionList()
     }, [sortBy, sortDir, search, page, size])
 
