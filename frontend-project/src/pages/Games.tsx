@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import GameCard from "../components/GameCard"
 import Navbar from "../components/Navbar"
 import { useUserDataStore } from "../store/userData"
@@ -37,7 +37,7 @@ const Games = () => {
     const displayGameCard = () => {
         let gameCards: JSX.Element[] = []
         for (let i = 0; i < 9; i++) {
-            let prize = Math.floor(Math.random() * 1000001)
+            let prize = Math.floor(Math.random() * (1000000 - 50000 + 1)) + 50000;
             const key = Math.floor(Math.random() * 1000001)
             gameCards.push(
                 <GameCard id={key} key={key} prize={prize} onClickCard={(prize) => {
