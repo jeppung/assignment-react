@@ -60,6 +60,7 @@ const Register = () => {
                         <div className="flex flex-col  gap-y-3">
                             <label htmlFor="email" className="font-bold">Email</label>
                             <input onChange={(e) => setEmail(e.target.value)} type="email" name="email" id="email" placeholder="asep.bc@gmail.com" className="border-[1px] border-[#4F4F4F] rounded-md px-5 py-3 text-sm" required />
+                            <p className="text-[12px] text-[#737373]">We'll never share your email with anyone else.</p>
                         </div>
                         <div className="flex flex-col  gap-y-3">
                             <label htmlFor="password" className="font-bold">Password</label>
