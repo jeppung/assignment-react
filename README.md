@@ -42,5 +42,6 @@ chmod +x mac-server
 ![Transfer page](./screenshots/image-3.png)
 ![Topup page](./screenshots/image-4.png)
 ![Games page](./screenshots/image-5.png)
+![Not found page](./screenshots/image-8.png)
 ![Example game](./screenshots/image-6.png)
 ![Transaction list](./screenshots/image-7.png)
