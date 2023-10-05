@@ -16,13 +16,9 @@ const Games = () => {
     const [prizes, setPrizes] = useState<number[]>([])
     const [disabledInteraction, setDisabledInteraction] = useState(false)
 
-
-    const [isSelected, setIsSelected] = useState<number | null>(null)
-
     useEffect(() => {
         preparingPrizes()
     }, [chance])
-
 
     const topupHandler = async (amount: number) => {
         let data: ITopupForm = {

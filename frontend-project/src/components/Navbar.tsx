@@ -1,7 +1,6 @@
 import { Link, useLocation } from "react-router-dom"
 import { useAuthStore } from "../store/userAuth"
 import { useUserDataStore } from "../store/userData"
-import { useEffect } from "react"
 
 const Navbar = () => {
 
