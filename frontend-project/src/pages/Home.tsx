@@ -79,7 +79,7 @@ const Home = () => {
         let maxPage: number = Math.ceil(transactions.count! / 10)
         for (let i = 1; i <= maxPage; i++) {
             pages.push(
-                <button className={`border py-2 px-5 border-[#BDBDBD] font-bold ${page == i ? "bg-[#23A6F0] text-white" : "text-[#23A6F0]"}`} onClick={() => setPage(i)}>{i}</button>
+                <button key={i} className={`border py-2 px-5 border-[#BDBDBD] font-bold ${page == i ? "bg-[#23A6F0] text-white" : "text-[#23A6F0]"}`} onClick={() => setPage(i)}>{i}</button>
             )
         }
         return pages
@@ -101,7 +101,9 @@ const Home = () => {
                         <p className="text-xl">Balance:</p>
                     </div>
                     <div className="self-end mt-2">
-                        <h1 className="text-5xl font-[500]">IDR {formatCurrency(userData.wallet?.balance as number, 2)}</h1>
+                        <h1 className="text-5xl font-[500]">IDR {
+                            userData.wallet?.balance != undefined && formatCurrency(userData.wallet.balance, 2)
+                        }</h1>
                     </div>
                 </section>
                 <section className="mt-[100px]">
