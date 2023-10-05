@@ -7,6 +7,7 @@ import { useUserDataStore } from "../store/userData"
 import { displayCurrentTime, formatCurrency } from "../utils"
 import moment from 'moment';
 import { useTransactionsStore } from "../store/transactionsStore"
+import toast, { Toaster } from "react-hot-toast"
 
 const Home = () => {
     const { token } = useAuthStore();
@@ -38,7 +39,7 @@ const Home = () => {
             setTempData((response.data as IAPIResponse).data as ITransactionsResponse)
         } catch (e) {
             if (axios.isAxiosError(e)) {
-                console.log(e)
+                toast.error("Error fetching transaction data")
             }
         }
     }
@@ -53,7 +54,7 @@ const Home = () => {
             return (response.data as IAPIResponse).data as ITransactionsResponse
         } catch (e) {
             if (axios.isAxiosError(e)) {
-                console.log(e)
+                toast.error("Error fetching transaction data")
             }
         }
     }
@@ -78,7 +79,6 @@ const Home = () => {
                 let response = await getAnotherTransactionList(initialCount)
                 setSize(response!.count)
                 let newTransactions = transactions.data?.filter((data) => moment(data.created_at).format("M") == moment().subtract(1, "month").format("M"))
-                console.log(newTransactions)
                 response!.data = newTransactions!
                 setTempData(response!)
                 break
@@ -87,7 +87,6 @@ const Home = () => {
                 let response = await getAnotherTransactionList(initialCount)
                 setSize(response!.count)
                 let newTransactions = transactions.data?.filter((data) => moment(data.created_at).format("YYYY") == moment(moment.now()).format("YYYY"))
-                console.log(newTransactions)
                 response!.data = newTransactions!
                 setTempData(response!)
                 break
@@ -96,7 +95,6 @@ const Home = () => {
                 let response = await getAnotherTransactionList(initialCount)
                 setSize(response!.count)
                 let newTransactions = transactions.data?.filter((data) => moment(data.created_at).format("YYYY") == moment().subtract(1, "year").format("YYYY"))
-                console.log(newTransactions)
                 response!.data = newTransactions!
                 setTempData(response!)
                 break
@@ -118,6 +116,7 @@ const Home = () => {
 
     return (
         <div className="font-montserrat">
+            <Toaster />
             <Navbar />
             <main className="max-w-5xl mx-auto pb-20">
                 <section className="flex flex-col mt-[48px]">
