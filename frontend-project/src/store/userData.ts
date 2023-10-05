@@ -6,7 +6,7 @@ import { persist } from 'zustand/middleware'
 
 interface IUserDataStore {
     userData: Partial<IUserDataResponse>,
-    setUserData: (data: IUserDataResponse) => void
+    setUserData: (data: Partial<IUserDataResponse>) => void
 }
 
 export const useUserDataStore = create(
