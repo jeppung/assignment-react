@@ -12,26 +12,29 @@ const Home = () => {
     const { token } = useAuthStore();
     const { userData } = useUserDataStore();
     const [tempData, setTempData] = useState<Partial<ITransactionsResponse>>({})
+    const [size, setSize] = useState(10)
     const [sortBy, setSortBy] = useState("date")
     const [sortDir, setSortDir] = useState("desc")
     const [search, setSearch] = useState("")
     const [page, setPage] = useState(1)
     const { transactions, setTransactions } = useTransactionsStore()
+    const [initialCount, setInitialCount] = useState(0)
 
 
     useEffect(() => {
         getTransactionList()
-    }, [sortBy, sortDir, search, page])
+    }, [sortBy, sortDir, search, page, size])
 
 
     const getTransactionList = async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/transactions?page=${page}&size=10&sortBy=${sortBy}&sortDir=${sortDir}&search=${search}`, {
+            const response = await axios.get(`http://localhost:8080/transactions?page=${page}&size=${size}&sortBy=${sortBy}&sortDir=${sortDir}&search=${search}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             })
             setTransactions((response.data as IAPIResponse).data as ITransactionsResponse)
+            setInitialCount(((response.data as IAPIResponse).data as ITransactionsResponse).count)
             setTempData((response.data as IAPIResponse).data as ITransactionsResponse)
         } catch (e) {
             if (axios.isAxiosError(e)) {
@@ -40,35 +43,62 @@ const Home = () => {
         }
     }
 
-    const filterByThisMonth = (data: string) => {
+    const getAnotherTransactionList = async (size: number) => {
+        try {
+            const response = await axios.get(`http://localhost:8080/transactions?page=${page}&size=${size}&sortBy=${sortBy}&sortDir=${sortDir}&search=${search}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            return (response.data as IAPIResponse).data as ITransactionsResponse
+        } catch (e) {
+            if (axios.isAxiosError(e)) {
+                console.log(e)
+            }
+        }
+    }
+
+    const filterByThisMonth = async (data: string) => {
         switch (data) {
             case "1": {
+                setSize(10)
                 setSortBy("date")
                 setSortBy("desc")
                 break
             }
             case "2": {
-                let newTransactions = transactions.data?.filter((data) => moment(data.created_at).format("M") == moment(moment.now()).format("M"))
-                console.log(newTransactions)
-                setTempData({ ...tempData, data: newTransactions, count: newTransactions?.length })
+                let response = await getAnotherTransactionList(initialCount)
+                setSize(response!.count)
+                let newTransactions = response?.data.filter((data) => moment(data.created_at).format("M") == moment(moment.now()).format("M"))
+                response!.data = newTransactions!
+                setTempData(response!)
                 break
             }
             case "3": {
+                let response = await getAnotherTransactionList(initialCount)
+                setSize(response!.count)
                 let newTransactions = transactions.data?.filter((data) => moment(data.created_at).format("M") == moment().subtract(1, "month").format("M"))
                 console.log(newTransactions)
-                setTempData({ ...tempData, data: newTransactions, count: newTransactions?.length })
+                response!.data = newTransactions!
+                setTempData(response!)
                 break
             }
             case "4": {
+                let response = await getAnotherTransactionList(initialCount)
+                setSize(response!.count)
                 let newTransactions = transactions.data?.filter((data) => moment(data.created_at).format("YYYY") == moment(moment.now()).format("YYYY"))
                 console.log(newTransactions)
-                setTempData({ ...tempData, data: newTransactions, count: newTransactions?.length })
+                response!.data = newTransactions!
+                setTempData(response!)
                 break
             }
             case "5": {
+                let response = await getAnotherTransactionList(initialCount)
+                setSize(response!.count)
                 let newTransactions = transactions.data?.filter((data) => moment(data.created_at).format("YYYY") == moment().subtract(1, "year").format("YYYY"))
                 console.log(newTransactions)
-                setTempData({ ...tempData, data: newTransactions, count: newTransactions?.length, })
+                response!.data = newTransactions!
+                setTempData(response!)
                 break
             }
         }
@@ -76,7 +106,8 @@ const Home = () => {
 
     const renderPageNumber = () => {
         let pages: JSX.Element[] = []
-        let maxPage: number = Math.ceil(transactions.count! / 10)
+        let maxPage: number = Math.ceil(tempData.count! / size)
+
         for (let i = 1; i <= maxPage; i++) {
             pages.push(
                 <button key={i} className={`border py-2 px-5 border-[#BDBDBD] font-bold ${page == i ? "bg-[#23A6F0] text-white" : "text-[#23A6F0]"}`} onClick={() => setPage(i)}>{i}</button>
@@ -173,9 +204,9 @@ const Home = () => {
                                     renderPageNumber()
                                 }
                             </div>
-                            <button className={`border py-2 px-5 rounded-tr-lg rounded-br-lg border-[#BDBDBD] text-[#23A6F0] font-bold ${page === Math.ceil(transactions.count! / 10) && "bg-[#F3F3F3] text-[#BDBDBD]"}`} onClick={() => {
+                            <button className={`border py-2 px-5 rounded-tr-lg rounded-br-lg border-[#BDBDBD] text-[#23A6F0] font-bold ${page === Math.ceil(tempData.count! / size) && "bg-[#F3F3F3] text-[#BDBDBD]"}`} onClick={() => {
                                 setPage(page + 1)
-                            }} disabled={page === Math.ceil(transactions.count! / 10)}>
+                            }} disabled={page === Math.ceil(tempData.count! / size) || Math.ceil(tempData.count! / size) === 0}>
                                 Next
                             </button>
                         </div>
