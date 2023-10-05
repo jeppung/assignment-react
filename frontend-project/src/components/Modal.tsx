@@ -24,11 +24,11 @@ const Modal = ({ data, onClose, title }: IModal) => {
                             </div>
                             <div className="flex justify-between items-center">
                                 <p>From</p>
-                                <h1>{data.wallet_id}</h1>
+                                <h1>{data.source_of_fund_id !== null && `100${data.source_of_fund_id}`}</h1>
                             </div>
                             <div className="flex justify-between items-center">
                                 <p>To</p>
-                                <h1>{data.to_wallet_id}</h1>
+                                <h1>{data.to_wallet_id !== null ? data.to_wallet_id : data.wallet_id}</h1>
                             </div>
                             <div className="flex justify-between items-center">
                                 <p>Description</p>

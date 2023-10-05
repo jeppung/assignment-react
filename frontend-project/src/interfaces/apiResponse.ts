@@ -34,5 +34,19 @@ export interface ITopupResponse {
     source_of_fund_id: number | null
     wallet_id: number
     to_wallet_id: number | null
-    to_user: Omit<IUserDataResponse, "wallet">
+    to_user: Omit<IUserDataResponse, "wallet"> | null
+}
+
+export interface ITransactionsResponse {
+    count: number
+    page: number
+    size: number
+    data: ITopupResponse[]
+}
+
+export interface ISourceFundResponse {
+    id: number
+    name: string
+    created_at: string
+    updated_at: string
 }
