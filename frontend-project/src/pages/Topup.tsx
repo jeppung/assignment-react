@@ -8,6 +8,7 @@ import { IAPIResponse, ITopupResponse } from "../interfaces/apiResponse"
 import { ITopupForm, ITopupState } from "../interfaces/topupForm"
 
 import toast, { Toaster } from 'react-hot-toast';
+import InputAmount from "../components/InputAmount"
 
 const Topup = () => {
     const [selectedFrom, setSelectedFrom] = useState(1)
@@ -69,10 +70,7 @@ const Topup = () => {
                             <label htmlFor="to" className="font-bold">To</label>
                             <input value={userData.wallet_id} type="number" name="to" id="to" className="border-[1px] border-[#4F4F4F] rounded-md px-5 py-3 text-sm" required disabled />
                         </div>
-                        <div className="flex flex-col gap-y-3">
-                            <label htmlFor="amount" className="font-bold">Amount</label>
-                            <input onChange={(e) => setAmount(parseInt(e.target.value))} value={amount} type="number" name="amount" id="amount" className="border-[1px] border-[#4F4F4F] rounded-md px-5 py-3 text-xl h-[72px]" required />
-                        </div>
+                        <InputAmount value={amount} onChange={(data) => setAmount(data)} />
                         <button className="text-sm bg-[#23A6F0] py-4 rounded-md text-white font-bold">Submit</button>
                     </form>
                 </div>
