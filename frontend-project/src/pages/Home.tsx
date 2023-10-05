@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import Navbar from "../components/Navbar"
 import axios from "axios"
 import { useAuthStore } from "../store/userAuth"
-import { IAPIResponse, ISourceFundResponse, ITransactionsResponse, IUserDataResponse } from "../interfaces/apiResponse"
+import { IAPIResponse, ITransactionsResponse } from "../interfaces/apiResponse"
 import { useUserDataStore } from "../store/userData"
 import { formatCurrency } from "../utils"
 import moment from 'moment';
@@ -10,41 +10,23 @@ import { useTransactionsStore } from "../store/transactionsStore"
 
 const Home = () => {
     const { token } = useAuthStore();
-    const { userData, setUserData } = useUserDataStore();
+    const { userData } = useUserDataStore();
     const [tempData, setTempData] = useState<Partial<ITransactionsResponse>>({})
-    const [sourceFunds, setSourceFunds] = useState<ISourceFundResponse[]>([])
     const [sortBy, setSortBy] = useState("date")
     const [sortDir, setSortDir] = useState("desc")
     const [search, setSearch] = useState("")
+    const [page, setPage] = useState(1)
     const { transactions, setTransactions } = useTransactionsStore()
 
-    useEffect(() => {
-        getUserData()
-        getSourceofFunds()
-    }, [])
 
     useEffect(() => {
         getTransactionList()
-    }, [sortBy, sortDir, search])
+    }, [sortBy, sortDir, search, page])
 
-    const getUserData = async () => {
-        try {
-            const response = await axios.get("http://localhost:8080/details", {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
-            setUserData((response.data as IAPIResponse).data as IUserDataResponse)
-        } catch (e) {
-            if (axios.isAxiosError(e)) {
-                console.log(e)
-            }
-        }
-    }
 
     const getTransactionList = async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/transactions?page=1&size=10&sortBy=${sortBy}&sortDir=${sortDir}&search=${search}`, {
+            const response = await axios.get(`http://localhost:8080/transactions?page=${page}&size=10&sortBy=${sortBy}&sortDir=${sortDir}&search=${search}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -57,23 +39,6 @@ const Home = () => {
             }
         }
     }
-
-    const getSourceofFunds = async () => {
-        try {
-            const response = await axios.get("http://localhost:8080/transactions/source-of-funds", {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
-
-            setSourceFunds((response.data as IAPIResponse).data as ISourceFundResponse[])
-        } catch (e) {
-            if (axios.isAxiosError(e)) {
-                console.log(e)
-            }
-        }
-    }
-
 
     const filterByThisMonth = (data: string) => {
         switch (data) {
@@ -109,7 +74,16 @@ const Home = () => {
         }
     }
 
-
+    const renderPageNumber = () => {
+        let pages: JSX.Element[] = []
+        let maxPage: number = Math.ceil(transactions.count! / 10)
+        for (let i = 1; i <= maxPage; i++) {
+            pages.push(
+                <button className={`border py-2 px-5 border-[#BDBDBD] font-bold ${page == i ? "bg-[#23A6F0] text-white" : "text-[#23A6F0]"}`} onClick={() => setPage(i)}>{i}</button>
+            )
+        }
+        return pages
+    }
 
 
 
@@ -123,7 +97,7 @@ const Home = () => {
                         <h1 className="text-4xl font-bold">Good Morning, {userData.first_name}</h1>
                     </div>
                     <div className="flex justify-between mt-2">
-                        <p className="text-xl">Account: {userData.id}</p>
+                        <p className="text-xl">Account: {userData.wallet_id}</p>
                         <p className="text-xl">Balance:</p>
                     </div>
                     <div className="self-end mt-2">
@@ -190,15 +164,19 @@ const Home = () => {
                             </tbody>
                         </table>
                         <div className="mt-5 flex">
-                            <button className="border py-2 px-5 rounded-tl-lg rounded-bl-lg border-[#BDBDBD]">
+                            <button className={`border py-2 px-5 rounded-tl-lg rounded-bl-lg border-[#BDBDBD] text-[#23A6F0]  font-bold ${page === 1 && "bg-[#F3F3F3] text-[#BDBDBD]"}`} onClick={() => {
+                                setPage(1)
+                            }} disabled={page === 1}>
                                 First
                             </button>
                             <div className="flex">
-                                <div className="border py-2 px-5 border-[#BDBDBD]">1</div>
-                                <div className="border py-2 px-5 border-[#BDBDBD]">2</div>
-                                <div className="border py-2 px-5 border-[#BDBDBD]">3</div>
+                                {
+                                    renderPageNumber()
+                                }
                             </div>
-                            <button className="border py-2 px-5 rounded-tr-lg rounded-br-lg border-[#BDBDBD]">
+                            <button className={`border py-2 px-5 rounded-tr-lg rounded-br-lg border-[#BDBDBD] text-[#23A6F0] font-bold ${page === Math.ceil(transactions.count! / 10) && "bg-[#F3F3F3] text-[#BDBDBD]"}`} onClick={() => {
+                                setPage(page + 1)
+                            }} disabled={page === Math.ceil(transactions.count! / 10)}>
                                 Next
                             </button>
                         </div>
