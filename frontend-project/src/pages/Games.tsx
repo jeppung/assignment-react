@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import GameCard from "../components/GameCard"
 import Navbar from "../components/Navbar"
 import { useUserDataStore } from "../store/userData"
@@ -12,7 +12,16 @@ import toast, { Toaster } from "react-hot-toast"
 const Games = () => {
     const { userData, setUserData } = useUserDataStore()
     const { token } = useAuthStore()
-    const [chance, setChance] = useState(3)
+    const [chance, setChance] = useState<number>(3)
+    const [prizes, setPrizes] = useState<number[]>([])
+    const [disabledInteraction, setDisabledInteraction] = useState(false)
+
+
+    const [isSelected, setIsSelected] = useState<number | null>(null)
+
+    useEffect(() => {
+        preparingPrizes()
+    }, [chance])
 
 
     const topupHandler = async (amount: number) => {
@@ -35,29 +44,13 @@ const Games = () => {
         }
     }
 
-    const displayGameCard = () => {
-        let gameCards: JSX.Element[] = []
+    const preparingPrizes = () => {
+        let temp = []
         for (let i = 0; i < 9; i++) {
             let prize = Math.floor(Math.random() * (1000000 - 50000 + 1)) + 50000;
-            const key = Math.floor(Math.random() * 1000001)
-            gameCards.push(
-                <GameCard id={key} key={key} prize={prize} onClickCard={(prize) => {
-                    toast((_) => (
-                        <div>
-                            <h1>Congratulation!</h1>
-                            <p>You Win, <span className="font-bold text-xl">{formatCurrency(prize, 0)}</span></p>
-                        </div>
-                    ), {
-                        icon: '🎉'
-                    })
-                    setTimeout(() => {
-                        topupHandler(prize)
-                        setChance(chance - 1)
-                    }, 2000)
-                }} isDisabled={chance === 0} />
-            )
+            temp.push(prize)
         }
-        return gameCards
+        setPrizes(temp)
     }
 
 
@@ -82,14 +75,29 @@ const Games = () => {
                         <p className="text-[18px]">Choose random box to get reward!</p>
                         <p className="text-[18px]">Chance: {chance}</p>
                     </div>
-                    <div className={`grid grid-cols-3 grid-rows-3 mt-[48px] gap-[50px]`}>
+                    <div className={`grid grid-cols-3 grid-rows-3 mt-[48px] gap-[50px] ${disabledInteraction && "pointer-events-none"}`}>
                         {
-                            displayGameCard()
+                            prizes.map((prize, i) => {
+                                return (
+                                    <GameCard setDisabledInteraction={setDisabledInteraction} key={i} id={i} prize={prize} isDisabled={chance === 0} onClickCard={(prize) => {
+                                        toast((_) => (
+                                            <div>
+                                                <h1>Congratulation</h1>
+                                                <p>You Win, <span className="font-bold text-xl">{formatCurrency(prize, 0)}</span></p>
+                                            </div>
+                                        ), {
+                                            icon: "🎉"
+                                        })
+                                        topupHandler(prize)
+                                        setChance(chance - 1)
+                                    }} />
+                                )
+                            })
                         }
                     </div>
-                </section>
-            </main>
-        </div>
+                </section >
+            </main >
+        </div >
     )
 }
 
