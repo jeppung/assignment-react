@@ -18,7 +18,7 @@ interface ITransferForm {
 }
 
 const Transfer = () => {
-    const { userData } = useUserDataStore();
+    const { userData, setUserData } = useUserDataStore();
     const { token } = useAuthStore();
     const [amount, setAmount] = useState<number | string>("")
     const [description, setDescription] = useState("")
@@ -47,6 +47,7 @@ const Transfer = () => {
             })
             console.log(response.data)
             setTransfer({ ...transfer, status: true, data: ((response.data as IAPIResponse).data) })
+            setUserData({ ...userData, wallet: { ...userData.wallet!, balance: userData.wallet!.balance - ((response.data as IAPIResponse).data as ITopupResponse).amount } })
         } catch (e) {
             if (axios.isAxiosError(e)) {
                 console.log(e)

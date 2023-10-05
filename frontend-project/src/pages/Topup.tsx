@@ -16,7 +16,7 @@ const Topup = () => {
         data: {}
     })
 
-    const { userData } = useUserDataStore()
+    const { userData, setUserData } = useUserDataStore()
     const { token } = useAuthStore()
 
     const topupHandler = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -34,6 +34,8 @@ const Topup = () => {
                 }
             })
             setTopup({ ...topup, status: true, data: (response.data as IAPIResponse).data })
+            setUserData({ ...userData, wallet: { ...userData.wallet!, balance: userData.wallet!.balance + ((response.data as IAPIResponse).data as ITopupResponse).amount } })
+
         } catch (e) {
             if (axios.isAxiosError(e)) {
                 console.log(e)
