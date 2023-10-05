@@ -81,7 +81,7 @@ const Login = () => {
                     <p className="text-[#252B42]">Forget password? <span className="font-[500]">Click here</span></p>
                 </div>
             </main>
-            <div className="bg-[#23A6F0] h-screen absolute right-0 flex items-center w-[480px] justify-center px-10">
+            <div className="bg-[#23A6F0] h-screen absolute right-0 flex items-center w-[34vw] justify-center px-10">
                 <img src="./assets/login.svg" alt="" />
             </div>
         </div>

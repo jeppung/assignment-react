@@ -73,7 +73,7 @@ const Register = () => {
                     </form>
                 </div>
             </main>
-            <div className="bg-[#23A6F0] w-[480px] justify-center h-screen absolute right-0 flex items-center px-10">
+            <div className="bg-[#23A6F0] w-[34vw] justify-center h-screen absolute right-0 flex items-center px-10">
                 <img src="./assets/register.svg" alt="" />
             </div>
         </div>
