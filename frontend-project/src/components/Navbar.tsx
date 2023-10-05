@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom"
 import { useAuthStore } from "../store/userAuth"
+import { useUserDataStore } from "../store/userData"
 
 const Navbar = () => {
 
@@ -35,9 +36,11 @@ const NavUnauth = () => {
 const NavAuth = () => {
 
     const { setToken } = useAuthStore()
+    const { setUserData } = useUserDataStore()
 
     const logoutHandler = () => {
         setToken("")
+        setUserData({})
     }
 
     return (
